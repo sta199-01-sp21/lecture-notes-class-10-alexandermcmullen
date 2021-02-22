@@ -1,7 +1,7 @@
 ---
-title: "Introduction to probability"
-author: ""
-date: ""
+title: "Introduction to Probability"
+author: "Alexander B. McMullen"
+date: "February 22, 2021"
 output: html_document
 editor_options: 
   chunk_output_type: console
