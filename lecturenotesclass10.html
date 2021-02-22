@@ -437,7 +437,7 @@ glimpse(Arthritis)</code></pre>
 <p>There are 8 marbles total, and each is equally as likely to be selected. The probability of any color being picked is <strong># of color / 8</strong>.</p>
 <p>We can simulate this “drawing” with the <code>sample()</code> function.</p>
 <pre class="r"><code>sample(marbles, size = 1)</code></pre>
-<pre><code>#&gt; [1] &quot;red&quot;</code></pre>
+<pre><code>#&gt; [1] &quot;white&quot;</code></pre>
 <p>We produced one random outcome from this experiment. To estimate the probability of say getting a white marble, we need to repeat this experiment many many times.</p>
 <p>In the <code>sample()</code> function we can change the <code>size</code> argument and set <code>replace = TRUE</code>. Setting <code>replace = TRUE</code> allows to draw from our population of eight marbles each time. This way we can easily simulate our marble-drawing experiment.</p>
 <pre class="r"><code>draw_results &lt;- sample(marbles, size = 10000, replace = TRUE)</code></pre>
@@ -445,7 +445,7 @@ glimpse(Arthritis)</code></pre>
 prop.table(counts)</code></pre>
 <pre><code>#&gt; draw_results
 #&gt;   blue    red  white 
-#&gt; 0.3764 0.4945 0.1291</code></pre>
+#&gt; 0.3661 0.5078 0.1261</code></pre>
 <p>How close is this value to the “true” probability?</p>
 <p><strong>To summarize our process:</strong></p>
 <ol style="list-style-type: decimal">
@@ -467,16 +467,16 @@ two_draw_results</code></pre>
 <pre><code>#&gt; # A tibble: 10,000 x 2
 #&gt;    draw_1 draw_2
 #&gt;    &lt;chr&gt;  &lt;chr&gt; 
-#&gt;  1 blue   red   
-#&gt;  2 red    red   
-#&gt;  3 red    blue  
+#&gt;  1 red    red   
+#&gt;  2 blue   blue  
+#&gt;  3 red    red   
 #&gt;  4 blue   red   
-#&gt;  5 blue   blue  
-#&gt;  6 white  white 
+#&gt;  5 red    blue  
+#&gt;  6 blue   red   
 #&gt;  7 red    red   
 #&gt;  8 blue   red   
-#&gt;  9 blue   red   
-#&gt; 10 blue   red   
+#&gt;  9 red    red   
+#&gt; 10 red    red   
 #&gt; # … with 9,990 more rows</code></pre>
 <p>How can we add a variable to <code>two_draw_results</code> to see if <code>draw_1</code> and <code>draw_2</code> match?</p>
 <pre class="r"><code>two_draw_results &lt;- two_draw_results %&gt;% 
@@ -485,16 +485,16 @@ two_draw_results</code></pre>
 <pre><code>#&gt; # A tibble: 10,000 x 3
 #&gt;    draw_1 draw_2 color_match
 #&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;lgl&gt;      
-#&gt;  1 blue   red    FALSE      
-#&gt;  2 red    red    TRUE       
-#&gt;  3 red    blue   FALSE      
+#&gt;  1 red    red    TRUE       
+#&gt;  2 blue   blue   TRUE       
+#&gt;  3 red    red    TRUE       
 #&gt;  4 blue   red    FALSE      
-#&gt;  5 blue   blue   TRUE       
-#&gt;  6 white  white  TRUE       
+#&gt;  5 red    blue   FALSE      
+#&gt;  6 blue   red    FALSE      
 #&gt;  7 red    red    TRUE       
 #&gt;  8 blue   red    FALSE      
-#&gt;  9 blue   red    FALSE      
-#&gt; 10 blue   red    FALSE      
+#&gt;  9 red    red    TRUE       
+#&gt; 10 red    red    TRUE       
 #&gt; # … with 9,990 more rows</code></pre>
 <p>All that remains is to compute the relative frequency of the observed outcomes from our many simulations.</p>
 <pre class="r"><code>two_draw_results %&gt;% 
@@ -503,8 +503,8 @@ two_draw_results</code></pre>
 <pre><code>#&gt; # A tibble: 2 x 3
 #&gt;   color_match     n proportion
 #&gt; * &lt;lgl&gt;       &lt;int&gt;      &lt;dbl&gt;
-#&gt; 1 FALSE        6005      0.600
-#&gt; 2 TRUE         3995      0.400</code></pre>
+#&gt; 1 FALSE        5933      0.593
+#&gt; 2 TRUE         4067      0.407</code></pre>
 </div>
 </div>
 <div id="practice" class="section level2">
@@ -512,6 +512,20 @@ two_draw_results</code></pre>
 <p>Suppose you roll two fair six-sided dice. Which has a higher probability: the square of dice roll 1 is equal to dice roll 2; or the absolute value of the difference between dice roll 1 and dice roll 2 is equal to 4.</p>
 <p>Perform a simulation to compute this empirical probability.</p>
 <p>Write down your guess to the answer before you calculate it.</p>
+<pre class="r"><code>two_dice_roll &lt;- tibble(
+  roll1 = replicate(n = 10000, expr = sample(1:6, size = 1)),
+  roll2 = replicate(n = 10000, expr = sample(1:6, size = 1)))
+  
+#My guess is that the absolute value will be more common.</code></pre>
+<pre class="r"><code>two_dice_roll &lt;- two_dice_roll %&gt;%
+  mutate(square_roll = roll1^2 == roll2, abs_roll = abs(roll1-roll2) == 4)</code></pre>
+<pre class="r"><code>two_dice_roll %&gt;%
+  summarize(square_roll_prob = mean(square_roll), 
+            abs_roll_prob = mean(abs_roll))</code></pre>
+<pre><code>#&gt; # A tibble: 1 x 2
+#&gt;   square_roll_prob abs_roll_prob
+#&gt;              &lt;dbl&gt;         &lt;dbl&gt;
+#&gt; 1           0.0541         0.107</code></pre>
 </div>
 <div id="additional-resources-please-look-at-before-weds." class="section level2">
 <h2>Additional Resources-please look at before Weds.</h2>

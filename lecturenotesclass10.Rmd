@@ -164,14 +164,25 @@ Write down your guess to the answer before you calculate it.
 
 ```{r simulate_rolls}
 
+two_dice_roll <- tibble(
+  roll1 = replicate(n = 10000, expr = sample(1:6, size = 1)),
+  roll2 = replicate(n = 10000, expr = sample(1:6, size = 1)))
+  
+#My guess is that the absolute value will be more common.
 ```
 
 ```{r identify_events}
+
+two_dice_roll <- two_dice_roll %>%
+  mutate(square_roll = roll1^2 == roll2, abs_roll = abs(roll1-roll2) == 4)
 
 ```
 
 ```{r summarize_rolls}
 
+two_dice_roll %>%
+  summarize(square_roll_prob = mean(square_roll), 
+            abs_roll_prob = mean(abs_roll))
 ```
 
 ## Additional Resources-please look at before Weds.
