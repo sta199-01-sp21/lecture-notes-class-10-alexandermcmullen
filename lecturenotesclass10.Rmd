@@ -49,14 +49,17 @@ xtabs(~ Treatment + Improved, data = Arthritis) %>%
 ```
 
 - How many patients were enrolled in the clinical trial?
+84 patients were enrolled in the trial.
 
 - What is the probability a randomly selected patient received the placebo?
+Probability of receiving placebo = Patients recieving placebo/total patients. 43/84 = **0.51**
 
 - What is the probability a randomly selected patient received the placebo
   and had a marked improvement?
   
 - What is the probability a randomly selected patient received the placebo
   and the treatment?
+  **This is disjoint probability. These cannot occur at the same time.**
   
 - What is the probability a randomly selected patient had some improvement or
   was on the treatment?
@@ -75,6 +78,8 @@ marbles <- c("red", "red", "white", "red", "blue", "blue", "red", "blue")
 Suppose we draw a single marble from our imaginary box, where all the marbles
 are equally likely to be selected. What is the probability the marble is blue? 
 How about white?
+
+There are 8 marbles total, and each is equally as likely to be selected. The probability of any color being picked is **# of color / 8**.
 
 We can simulate this "drawing" with the `sample()` function.
 
