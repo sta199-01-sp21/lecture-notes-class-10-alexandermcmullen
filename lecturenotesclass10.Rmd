@@ -2,8 +2,10 @@
 title: "Introduction to Probability"
 author: "Alexander B. McMullen"
 date: "February 22, 2021"
-output: html_document
-editor_options: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
   chunk_output_type: console
 ---
 
@@ -56,6 +58,7 @@ Probability of receiving placebo = Patients recieving placebo/total patients. 43
 
 - What is the probability a randomly selected patient received the placebo
   and had a marked improvement?
+  7/84 = **0.083**
   
 - What is the probability a randomly selected patient received the placebo
   and the treatment?
@@ -63,6 +66,7 @@ Probability of receiving placebo = Patients recieving placebo/total patients. 43
   
 - What is the probability a randomly selected patient had some improvement or
   was on the treatment?
+  48/84 = **0.571**
 
 ## Using computer simulations to calculate probabilities
 
@@ -106,6 +110,10 @@ prop.table(counts)
 ```
 
 How close is this value to the "true" probability?
+
+These values are extremely close to the true theoretical probability. 
+The probabilities of each color calculated in Rstudio are each less than 0.005 
+off from the real value. 
 
 **To summarize our process:**
 
